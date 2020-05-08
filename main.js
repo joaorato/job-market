@@ -1,14 +1,3 @@
-var gameData = {
-    gender: "man",
-    ageYears: 0,
-    ageMonths: 0,
-    intelligence: 0,
-    experience: 0,
-    stress: 0,
-    happiness: 100,
-    money: 0,
-}
-
 function timePassing() {
     
     //time display
@@ -216,14 +205,19 @@ function timeController(multiplier){
 }
 
 var mainGameLoop = window.setInterval(function () {
-    timePassing()
+    if (gameData.start == true) {
+        timePassing()
+    }
 }, 2000)
+    
 
 // store in a function so we can call it again
 function startLoop(time_interval) {
   // Store the id of the interval so we can clear it later
   mainGameLoop = setInterval(function() {
-    timePassing()
+    if (gameData.start == true) {
+        timePassing()
+    }
   }, time_interval);
 }
 
