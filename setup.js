@@ -58,5 +58,26 @@ function naming() {
     }
 }
 
+function reset(){
+    gameData.gender = null;
+    gameData.name = null;
+    gameData.ageYears = 0;
+    gameData.ageMonths = 0;
+    gameData.intelligence = 0;
+    gameData.experience = 0;
+    gameData.stress = 0;
+    gameData.happiness = 100;
+    gameData.money = 0;
+    gameData.start = false
+    document.getElementById("nameAndGender").innerHTML = '';
+    document.getElementById("age").innerHTML = "Age: " + gameData.ageYears + " years " + gameData.ageMonths + " months"
+    document.getElementById("happiness").innerHTML = "Happiness: " + gameData.happiness + "/100"
+    document.getElementById("intelligence").innerHTML = "Intelligence: " + gameData.intelligence
+    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
+    document.getElementById("money").innerHTML = "Money: " + gameData.money + " $"
+    document.getElementById("action").innerHTML = ''
+    genderButtonsOn()
+}
+
 
 
