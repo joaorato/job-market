@@ -56,6 +56,10 @@ function ageTextOff(){
     document.getElementById("comingOfAge").innerHTML = ""
 }
 
+function actionTextOff(){
+    document.getElementById("action").innerHTML = ""
+}
+
 function workButtonOn(){
     document.getElementById("workButtonAppear").innerHTML = '<button onclick="work()">Work</button>';
 }
