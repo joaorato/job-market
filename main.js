@@ -9,6 +9,7 @@ function timePassing() {
     
     if (gameData.ageMonths >= 3) {
         ageTextOff()
+        actionTextOff()
     }
 
     if(gameData.ageYears == 5 && gameData.ageMonths == 0) {
