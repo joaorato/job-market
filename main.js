@@ -7,18 +7,25 @@ function timePassing() {
         gameData.ageYears += 1
     }
     
-    if (gameData.ageMonths >= 3) {
+    if (gameData.ageMonths >= 4) {
         ageTextOff()
-        actionTextOff()
     }
 
-    if(gameData.ageYears == 5 && gameData.ageMonths == 0) {
+    actionTextOff()
+
+    if(gameData.ageYears >= 5 && IsBaby) {
         ageTextOn(5)
         studyButtonOn()
+        IsBaby = false
+        IsChild = true
     }
 
-    if (gameData.ageYears == 16 && gameData.ageMonths == 0)
+    if (gameData.ageYears >= 13 && IsChild){
+        ageTextOn(13)
         workButtonOn()
+        IsChild = false
+        IsTeen = true
+    }
     
     if(gameData.ageYears == 80 && gameData.ageMonths == 0)
         workButtonOff()
@@ -48,7 +55,7 @@ function timePassing() {
 function ageTextOn(age){
     if (age == 5)
         document.getElementById("comingOfAge").innerHTML = "You are now old enough to study!"
-    if (age == 16)
+    if (age == 13)
         document.getElementById("comingOfAge").innerHTML = "You are now old enough to work or to choose a field of study!"
 
 }
@@ -155,17 +162,27 @@ function relax() {
 
 function work() { //work for 6 months
     
-    // 16 < age < 21 less money but less stress
+    // 13 < age < 16, less time, almost no money, almost no stress, less experience
+    if (gameData.ageYears >= 13 && gameData.ageYears < 16){
+        gameData.money += 5
+        gameData.stress += 1
+        gameData.experience += 1
+        passMonths(3)
+    }
+
+    // 16 < age < 21 few money but few stress, some experience
     if (gameData.ageYears >= 16 && gameData.ageYears < 21){
         gameData.money += 20
         gameData.stress += 3
+        gameData.experience += 2
         passMonths(6)
     }
     
-    // age > 21 more money and more stress
+    // age > 21 more money and more stress, good experience
     else {
         gameData.money += 50
         gameData.stress += 5
+        gameData.experience += 3
         passMonths(6)
     }
 
