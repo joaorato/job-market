@@ -1,21 +1,18 @@
 var gameData = {
     gender: null,
     name: null,
-    ageYears: 12,
+    ageYears: 0,
     ageMonths: 0,
     intelligence: 0,
     experience: 0,
     stress: 0,
     happiness: 100,
     money: 0,
+    lifeStage: 0, // 0 -> baby, 1 -> child, 2 -> teen, 3 -> adult, 4 -> elder
     start: false
 }
 
-var IsBaby = true
-var IsChild = false
-var IsTeen = false
-var IsAdult = false
-var IsElderly = false
+var lifeStages = ["baby", "child", "teen", "adult", "elder"];
 
 function genderButtonsOn(){
     document.getElementById("femaleButton").innerHTML = '<button onclick="gendering(0)">Female</button>';
@@ -34,19 +31,19 @@ genderButtonsOn()
 function gendering(gender) {
     switch(gender) {
         case 0:
-            gameData.gender = "Female";
+            gameData.gender = "female";
             break;
         case 1:
-            gameData.gender = "Male";
+            gameData.gender = "male";
             break;
         case 2:
             rand = Math.floor(Math.random()*2)
             switch(rand) {
                 case 0:
-                    gameData.gender = "Female";
+                    gameData.gender = "female";
                     break;
                 case 1:
-                    gameData.gender = "Male";
+                    gameData.gender = "male";
                     break;
             }
     }
@@ -60,7 +57,7 @@ function naming() {
 
     if (name != null && gameData.gender != null){
         gameData.name = name
-        document.getElementById("nameAndGender").innerHTML = name + ", a " + gameData.gender;
+        document.getElementById("nameAndGender").innerHTML = name + ", a " + gameData.gender + " " + lifeStages[gameData.lifeStage];
     }
 }
 
@@ -74,12 +71,8 @@ function reset(){
     gameData.stress = 0;
     gameData.happiness = 100;
     gameData.money = 0;
-    gameData.start = false
-    IsBaby = true
-    IsChild = false
-    IsTeen = false
-    IsAdult = false
-    IsElderly = false
+    gameData.lifeStage = 0;
+    gameData.start = false;
     document.getElementById("nameAndGender").innerHTML = '';
     document.getElementById("age").innerHTML = "Age: " + gameData.ageYears + " years " + gameData.ageMonths + " months"
     document.getElementById("happiness").innerHTML = "Happiness: " + gameData.happiness + "/100"

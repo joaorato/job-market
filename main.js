@@ -13,22 +13,30 @@ function timePassing() {
 
     actionTextOff()
 
-    if(gameData.ageYears >= 5 && IsBaby) {
+    if(gameData.ageYears >= 5 && gameData.lifeStage == 0) {
         ageTextOn(5)
         studyButtonOn()
-        IsBaby = false
-        IsChild = true
+        gameData.lifeStage = 1
+        document.getElementById("nameAndGender").innerHTML = gameData.name + ", a " + gameData.gender + " " + lifeStages[gameData.lifeStage];
     }
 
-    if (gameData.ageYears >= 13 && IsChild){
+    if (gameData.ageYears >= 13 && gameData.lifeStage == 1){
         ageTextOn(13)
         workButtonOn()
-        IsChild = false
-        IsTeen = true
+        gameData.lifeStage = 2
+        document.getElementById("nameAndGender").innerHTML = gameData.name + ", a " + gameData.gender + " " + lifeStages[gameData.lifeStage];
     }
     
-    if(gameData.ageYears == 80 && gameData.ageMonths == 0)
+    if (gameData.ageYears >= 21 && gameData.lifeStage == 2){
+        gameData.lifeStage = 3
+        document.getElementById("nameAndGender").innerHTML = gameData.name + ", a " + gameData.gender + " " + lifeStages[gameData.lifeStage];
+    }
+
+    if(gameData.ageYears >= 80 && gameData.lifeStage == 3){
         workButtonOff()
+        gameData.lifeStage = 4
+        document.getElementById("nameAndGender").innerHTML = gameData.name + ", a " + gameData.gender + " " + lifeStages[gameData.lifeStage];
+    }
     
     //natural increase in intelligence for age < 25
     if (gameData.ageYears <= 25) {
