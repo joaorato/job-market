@@ -1,11 +1,7 @@
 function timePassing() {
     
     //time display
-    gameData.ageMonths += 1
-    if (gameData.ageMonths == 12) {
-        gameData.ageMonths = 0
-        gameData.ageYears += 1
-    }
+    passMonths(1)
     
     if (gameData.ageMonths >= 4) {
         ageTextOff()
@@ -32,32 +28,67 @@ function timePassing() {
         document.getElementById("nameAndGender").innerHTML = gameData.name + ", a " + gameData.gender + " " + lifeStages[gameData.lifeStage];
     }
 
-    if(gameData.ageYears >= 80 && gameData.lifeStage == 3){
-        workButtonOff()
+    if(gameData.ageYears >= 65 && gameData.lifeStage == 3){
         gameData.lifeStage = 4
+        document.getElementById("nameAndGender").innerHTML = gameData.name + ", a " + gameData.gender + " " + lifeStages[gameData.lifeStage];
+    }
+
+    if(gameData.ageYears >= 85 && gameData.lifeStage == 4){
+        workButtonOff()
+        gameData.lifeStage = 5
         document.getElementById("nameAndGender").innerHTML = gameData.name + ", a " + gameData.gender + " " + lifeStages[gameData.lifeStage];
     }
     
     //natural increase in intelligence for age < 25
     if (gameData.ageYears <= 25) {
-        gameData.intelligence += 1
+        setIntelligence(1)
     }
     //natural decrease in intelligence for age > 70
     else if (gameData.ageYears >= 70) {
-        gameData.intelligence -= 1
+        setIntelligence(-1)
     }
     //natural increase in stress for 25 < age < 70
     else {
-        gameData.stress += 1
+        setStress(1)
     }
     
     //natural decrease in happiness for everyone
-    gameData.happiness -= 1
+    setHapiness(-1)
     
+    //final computation of the chance of death
+    deathChance()
+
     document.getElementById("age").innerHTML = "Age: " + gameData.ageYears + " years " + gameData.ageMonths + " months"
     document.getElementById("happiness").innerHTML = "Happiness: " + gameData.happiness + "/100"
     document.getElementById("intelligence").innerHTML = "Intelligence: " + gameData.intelligence
     document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
+}
+
+function deathChance(){
+    //calculates the chance of death from the attributes and age.
+    //also computes de cause of death
+    var chance = 0 //out of 100
+    var chanceHap = 0 //happiness factor
+    var chanceStress = 0 //stress factor
+
+    var random = Math.floor(Math.random*101)
+
+    if (random <= chance)
+        death()
+}
+
+function death()
+{
+    window.alert("You sadly passed away at the age of " + gameData.ageYears + " from " + gameData.deathCause + ".")
+    reset()
+}
+
+function expenses(){
+    //monthly loss of money for adults+
+}
+
+function monthlyAttributes(){
+    //monthly change in attributes for each lifestage
 }
 
 function ageTextOn(age){
@@ -103,28 +134,58 @@ function passMonths(months) {
     document.getElementById("age").innerHTML = "Age: " + gameData.ageYears + " years " + gameData.ageMonths + " months"
 }
 
+function setIntelligence(value){
+    var expectedInt = gameData.intelligence + value
+    if (expectedInt < 0)
+        gameData.intelligence = 0
+    else
+        gameData.intelligence = expectedInt
+}
+
+function setExperience(value){
+    gameData.experience += value
+}
+
+function setStress(value){
+    var expectedStress = gameData.stress + value;
+    if (expectedStress > 100)
+        gameData.stress = 100
+    else if (expectedStress < 0)
+        gameData.stress = 0
+    else
+        gameData.stress = expectedStress
+}
+
+function setHapiness(value){
+    var expectedHap = gameData.happiness + value;
+    if (expectedHap > 100)
+        gameData.happiness = 100
+    else if (expectedHap < 0)
+        gameData.happiness = 0
+    else
+        gameData.happiness = expectedHap
+}
+
+function setMoney(value){
+    var expectedMoney = gameData.money + value
+    if (expectedMoney < 0) //MAYBE POSSIBILITY OF DEBT IN THE FUTURE
+        gameData.money = 0
+    else
+        gameData.money = expectedMoney
+    
+}
+
 function haveFun() {
 
     //reduce stress
-    if(gameData.stress >= 1) {
-        gameData.stress -= 1
-    }
-    else {
-        gameData.stress = 0
-    }
+    setStress(-1)
 
     //increase happiness
-    if(gameData.happiness <= 98) {
-        gameData.happiness += 2
-    }
-    else {
-        gameData.happiness = 100
-    }
+    setHapiness(2)
 
     //reduce intelligence
-    if(gameData.intelligence > 0) {
-        gameData.intelligence -= 1
-    }
+    //maybe more damage to intelligence if happiness is capped
+    setIntelligence(-1)
 
     document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
     document.getElementById("happiness").innerHTML = "Happiness: " + gameData.happiness + "/100"
@@ -138,23 +199,13 @@ function relax() {
     
     // if age <= 25 relax costs no money nor time but reduces less stress
     if (gameData.ageYears <= 25) {
-        if(gameData.stress >= 2) {
-            gameData.stress -= 2
-        }
-        else {
-            gameData.stress = 0
-        }
+        setStress(-2)
     }
     // if age > 25 the contrary
     else {
         if (gameData.money >= 100) {
-            gameData.money -= 100
-            if(gameData.stress >= 5) {
-                gameData.stress -= 5
-            }
-            else {
-                gameData.stress = 0
-            }
+            setMoney(-100)
+            setStress(-5)
         }
         else {
             document.getElementById("action").innerHTML = "Not enough money to go on holiday!"
@@ -172,30 +223,27 @@ function work() { //work for 6 months
     
     // 13 < age < 16, less time, almost no money, almost no stress, less experience
     if (gameData.ageYears >= 13 && gameData.ageYears < 16){
-        gameData.money += 5
-        gameData.stress += 1
-        gameData.experience += 1
+        setMoney(5)
+        setStress(1)
+        setExperience(1)
         passMonths(3)
     }
 
     // 16 < age < 21 few money but few stress, some experience
-    if (gameData.ageYears >= 16 && gameData.ageYears < 21){
-        gameData.money += 20
-        gameData.stress += 3
-        gameData.experience += 2
+    else if (gameData.ageYears >= 16 && gameData.ageYears < 21){
+        setMoney(20)
+        setStress(3)
+        setExperience(2)
         passMonths(6)
     }
     
     // age > 21 more money and more stress, good experience
     else {
-        gameData.money += 50
-        gameData.stress += 5
-        gameData.experience += 3
+        setMoney(50)
+        setStress(5)
+        setExperience(3)
         passMonths(6)
     }
-
-    //for now experience increase is the same for all ages
-    gameData.experience += 1
 
     var phrases = ["You worked like a mad " + gameData.gender + "!"]
     document.getElementById("action").innerHTML = phrases[Math.floor( Math.random()*1 )]
@@ -209,21 +257,25 @@ function study() {
     
     // for age <= 15 greater increase in intelligence more damage to happiness
     if (gameData.ageYears <= 15) {
-        gameData.intelligence += 3
-        gameData.happiness -= 2
-        gameData.stress += 1
+        setIntelligence(3)
+        setHapiness(-2)
+        setStress(1)
     }
     // for 16 < age < 23 less damage to hapiness, more to stress
     else if (gameData.ageYears <= 23) {
+        setIntelligence(3)
+        setHapiness(-1)
+        setStress(2)
         gameData.intelligence += 3
         gameData.happiness -= 1
         gameData.stress += 2
     }
     // age > 23 small increase in happiness, smaller in intelligence, very small increase in stress 
     else {
-        gameData.intelligence += 1
-        gameData.happiness += 1
-        gameData.stress += 1
+        setIntelligence(1)
+        setHapiness(1)
+        setStress(1)
+        //maybe costs money?
     }
     passMonths(3)
 }

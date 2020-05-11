@@ -8,11 +8,12 @@ var gameData = {
     stress: 0,
     happiness: 100,
     money: 0,
-    lifeStage: 0, // 0 -> baby, 1 -> child, 2 -> teen, 3 -> adult, 4 -> elder
+    lifeStage: 0, // 0 -> baby, 1 -> child, 2 -> teen, 3 -> adult, 4 -> late adult, 5 -> elder
+    deathCause: null,
     start: false
 }
 
-var lifeStages = ["baby", "child", "teen", "adult", "elder"];
+var lifeStages = ["baby", "child", "teen", "adult", "late adult", "elder"];
 
 function genderButtonsOn(){
     document.getElementById("femaleButton").innerHTML = '<button onclick="gendering(0)">Female</button>';
@@ -72,6 +73,7 @@ function reset(){
     gameData.happiness = 100;
     gameData.money = 0;
     gameData.lifeStage = 0;
+    gameData.deathCause = null;
     gameData.start = false;
     document.getElementById("nameAndGender").innerHTML = '';
     document.getElementById("age").innerHTML = "Age: " + gameData.ageYears + " years " + gameData.ageMonths + " months"
@@ -84,6 +86,3 @@ function reset(){
     workButtonOff()
     genderButtonsOn()
 }
-
-
-
