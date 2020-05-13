@@ -1,7 +1,7 @@
 function timePassing() {
     
     //time display
-    passMonths(1)
+    passMonths(0.1)
     
     if (gameData.ageMonths >= 4) {
         ageTextOff()
@@ -71,10 +71,35 @@ function deathChance(){
     var chanceHap = 0 //happiness factor
     var chanceStress = 0 //stress factor
 
-    var random = Math.floor(Math.random*101)
+    if (gameData.happiness < 50 && gameData.happiness > 30){
+        //from 0% to 5% chance of dying - suicide
+        chanceHap = 0.05*(100 - 5*(gameData.happiness-30))
+    }
+    if (gameData.happiness <= 30 && gameData.happiness > 10){
+        //from 5% to 15% chance of dying - suicide
+        chanceHap = 0.15*(100 - (10/3)*(gameData.happiness-10))
+    }
+    if (gameData <= 10){
+        //from 15% to 50% chance of dying - suicide
+        chanceHap = 0.50*(100 - 7*(gameData.happiness))
+    }
 
-    if (random <= chance)
+    chance = chanceStress + chanceHap
+
+    console.log("Chance: " + chance + "/100")
+    
+    var random = Math.floor(Math.random()*101)
+    console.log(random)
+    
+    if (random <= chance) {
+        if (chanceHap > chanceStress) {
+            gameData.deathCause = "suicide"
+        }
+        else{
+            gameData.deathCause = "heart failure"
+        }
         death()
+    }
 }
 
 function death()
