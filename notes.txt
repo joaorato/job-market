@@ -1,3 +1,3 @@
-include image related to the age: baby -> teen -> ...
-certain buttons appear with age: study only after 5 yrs, work after 15? etc
 special choices in certain ages
+
+therapists, events that help increase happiness, reduce stress etc.

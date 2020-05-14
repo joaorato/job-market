@@ -69,22 +69,43 @@ function deathChance(){
     //also computes de cause of death
     var chance = 0 //out of 100
     var chanceHap = 0 //happiness factor
-    var chanceStress = 0 //stress factor
+    var chanceHealth = 0 //stress + age factor
 
-    if (gameData.happiness < 50 && gameData.happiness > 30){
+    //happiness contribution
+    var happiness = gameData.happiness
+    if (happiness < 50 && happiness > 30){
         //from 0% to 5% chance of dying - suicide
-        chanceHap = 0.05*(100 - 5*(gameData.happiness-30))
+        chanceHap = 0.05*(100 - 5*(happiness-30))
     }
-    if (gameData.happiness <= 30 && gameData.happiness > 10){
+    if (happiness <= 30 && happiness > 10){
         //from 5% to 15% chance of dying - suicide
-        chanceHap = 0.15*(100 - (10/3)*(gameData.happiness-10))
+        chanceHap = 0.15*(100 - (10/3)*(happiness-10))
     }
     if (gameData <= 10){
         //from 15% to 50% chance of dying - suicide
-        chanceHap = 0.50*(100 - 7*(gameData.happiness))
+        chanceHap = 0.50*(100 - 7*(happiness))
     }
 
-    chance = chanceStress + chanceHap
+    //stress + age contribution
+    var stress = gameData.stress
+    if (stress > 50 && stress < 70){
+        //from 0% to 15% chance of dying - 
+        chanceHealth = 0.15*(100 - 5*(70-stress))
+    }
+    if (stress >= 70 && stress < 90){
+        //from 15% to 35% chance of dying - 
+        chanceHealth = 0.35*(100 - 2.857142*(90-stress))
+    }
+    if (stress >= 90 && stress){
+        //from 35% to 60% chance of dying - 
+        chanceHealth = 0.60*(100 - (25/6)*(100-stress))
+    }
+    
+    chanceHealth = gameData.ageYears*chanceHealth/100 //check for balance
+    //include some natural death where stress is not a factor!
+    //gaussian function around 90 yrs?
+
+    chance = chanceHealth + chanceHap
 
     console.log("Chance: " + chance + "/100")
     
@@ -92,7 +113,7 @@ function deathChance(){
     console.log(random)
     
     if (random <= chance) {
-        if (chanceHap > chanceStress) {
+        if (chanceHap > chanceHealth) {
             gameData.deathCause = "suicide"
         }
         else{
