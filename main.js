@@ -1,13 +1,24 @@
+var actionMade = false
+var holdActionText = true
+
 function timePassing() {
     
     //time display
-    passMonths(0.1)
+    passMonths(1)
     
     if (gameData.ageMonths >= 4) {
         ageTextOff()
     }
 
-    actionTextOff()
+    if (actionMade){
+        if(holdActionText)
+            holdActionText = false
+        else{
+            actionTextOff()
+            actionMade = false
+            holdActionText = true
+        }
+    }
 
     if(gameData.ageYears >= 5 && gameData.lifeStage == 0) {
         ageTextOn(5)
@@ -56,9 +67,10 @@ function timePassing() {
     setHapiness(-1)
     
     //final computation of the chance of death
+    //maybe not compute this every month
     deathChance()
 
-    document.getElementById("age").innerHTML = "Age: " + gameData.ageYears + " years " + gameData.ageMonths + " months"
+    document.getElementById("age").innerHTML = "Age: " + gameData.ageYears + " years " + Math.floor(gameData.ageMonths) + " months"
     document.getElementById("happiness").innerHTML = "Happiness: " + gameData.happiness + "/100"
     document.getElementById("intelligence").innerHTML = "Intelligence: " + gameData.intelligence
     document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
@@ -71,26 +83,31 @@ function deathChance(){
     var chanceHap = 0 //happiness factor
     var chanceHealth = 0 //stress + age factor
 
-    //happiness contribution
-    var happiness = gameData.happiness
-    if (happiness < 50 && happiness > 30){
-        //from 0% to 5% chance of dying - suicide
-        chanceHap = 0.05*(100 - 5*(happiness-30))
-    }
-    if (happiness <= 30 && happiness > 10){
-        //from 5% to 15% chance of dying - suicide
-        chanceHap = 0.15*(100 - (10/3)*(happiness-10))
-    }
-    if (gameData <= 10){
-        //from 15% to 50% chance of dying - suicide
-        chanceHap = 0.50*(100 - 7*(happiness))
+    //happiness contribution - not until 13 years old
+    if (gameData.ageYears > 12){
+        // var happiness = gameData.happiness
+        // if (happiness < 50 && happiness > 30){
+        //     //from 0% to 5% chance of dying - suicide
+        //     chanceHap = 0.05*(100 - 5*(happiness-30))
+        // }
+        // if (happiness <= 30 && happiness > 10){
+        //     //from 5% to 15% chance of dying - suicide
+        //     chanceHap = 0.15*(100 - (10/3)*(happiness-10))
+        // }
+        // if (gameData <= 10){
+        //     //from 15% to 50% chance of dying - suicide
+        //     chanceHap = 0.50*(100 - 7*(happiness))
+        // }
+        chanceHap = 10*Math.exp(-0.15*(happiness-15)) //yearly
+        console.log(Math.exp(-12.75) + "Happiness Yearly Chance: " + chanceHap + "%")
+        chanceHap = 100 - Math.pow(100-chanceHap, 1/12)
     }
 
     //stress + age contribution
     var stress = gameData.stress
-    if (stress > 50 && stress < 70){
+    if (stress < 70){
         //from 0% to 15% chance of dying - 
-        chanceHealth = 0.15*(100 - 5*(70-stress))
+        chanceHealth = 0.15*(100 - (10/7)*(70-stress)) //change this to non-linear after
     }
     if (stress >= 70 && stress < 90){
         //from 15% to 35% chance of dying - 
@@ -101,15 +118,25 @@ function deathChance(){
         chanceHealth = 0.60*(100 - (25/6)*(100-stress))
     }
     
-    chanceHealth = gameData.ageYears*chanceHealth/100 //check for balance
+    chanceHealth = gameData.ageYears*chanceHealth/50 //check for balance
     //include some natural death where stress is not a factor!
     //gaussian function around 90 yrs?
+    if (gameData.ageYears > 65){
+        chanceHealth += Math.min(gameData.ageYears*(4/10), 40)
+    }
+    if (chanceHealth >= 100)
+        chanceHealth = 99
 
     chance = chanceHealth + chanceHap
 
-    console.log("Chance: " + chance + "/100")
+    if (chance >= 100)
+        chance = 99
+
+    console.log("Happiness Chance: " + chanceHap + "%")
+    console.log("Health Chance: " + chanceHealth + "%")
+    console.log("Chance: " + chance + "%")
     
-    var random = Math.floor(Math.random()*101)
+    var random = Math.random()*101
     console.log(random)
     
     if (random <= chance) {
@@ -117,6 +144,8 @@ function deathChance(){
             gameData.deathCause = "suicide"
         }
         else{
+            if (gameData.ageYears > 85 && gameData.stress < 30)
+                gameData.deathCause = "a natural death"
             gameData.deathCause = "heart failure"
         }
         death()
@@ -239,6 +268,7 @@ function haveFun() {
     
     var phrases = ["You went to the movies!", "You danced!", "You played videogames!", "You went out with your parents!", "You hung out with friends!"]
     document.getElementById("action").innerHTML = phrases[Math.floor( Math.random()*5 )]
+    actionMade = true
 }
 
 function relax() {
@@ -263,6 +293,7 @@ function relax() {
     
     document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
     document.getElementById("money").innerHTML = "Money: " + gameData.money + " $"
+    actionMade = true
 }
 
 function work() { //work for 6 months
@@ -297,6 +328,7 @@ function work() { //work for 6 months
     document.getElementById("experience").innerHTML = "Experience: " + gameData.experience
     document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
     document.getElementById("money").innerHTML = "Money: " + gameData.money + " $"
+    actionMade = true
 }
 
 function study() {
@@ -324,6 +356,7 @@ function study() {
         //maybe costs money?
     }
     passMonths(3)
+    actionMade = true
 }
 
 function timeController(multiplier){
