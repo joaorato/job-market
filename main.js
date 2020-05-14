@@ -85,7 +85,7 @@ function deathChance(){
 
     //happiness contribution - not until 13 years old
     if (gameData.ageYears > 12){
-        // var happiness = gameData.happiness
+        var happiness = gameData.happiness
         // if (happiness < 50 && happiness > 30){
         //     //from 0% to 5% chance of dying - suicide
         //     chanceHap = 0.05*(100 - 5*(happiness-30))
@@ -98,9 +98,9 @@ function deathChance(){
         //     //from 15% to 50% chance of dying - suicide
         //     chanceHap = 0.50*(100 - 7*(happiness))
         // }
-        chanceHap = 10*Math.exp(-0.15*(happiness-15)) //yearly
-        console.log(Math.exp(-12.75) + "Happiness Yearly Chance: " + chanceHap + "%")
-        chanceHap = 100 - Math.pow(100-chanceHap, 1/12)
+        chanceHap = 0.1*Math.exp(-0.15*(happiness-15)) //yearly
+        console.log("Happiness Yearly Chance: " + chanceHap*100 + "%")
+        chanceHap = (1 - Math.pow(1-chanceHap, 1/12))*100 //monthly
     }
 
     //stress + age contribution

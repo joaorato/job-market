@@ -1,7 +1,7 @@
 var gameData = {
     gender: null,
     name: null,
-    ageYears: 10,
+    ageYears: 0,
     ageMonths: 0,
     intelligence: 0,
     experience: 0,
