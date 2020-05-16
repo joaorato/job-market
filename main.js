@@ -1,6 +1,3 @@
-var actionMade = false
-var holdActionText = true
-
 function timePassing() {
     
     //time display
@@ -73,7 +70,7 @@ function timePassing() {
     document.getElementById("age").innerHTML = "Age: " + gameData.ageYears + " years " + Math.floor(gameData.ageMonths) + " months"
     document.getElementById("happiness").innerHTML = "Happiness: " + gameData.happiness + "/100"
     document.getElementById("intelligence").innerHTML = "Intelligence: " + gameData.intelligence
-    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
+    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress + "/100"
 }
 
 function deathChance(){
@@ -144,7 +141,7 @@ function deathChance(){
             gameData.deathCause = "suicide"
         }
         else{
-            if (gameData.ageYears > 85 && gameData.stress < 30)
+            if (gameData.ageYears > 85 && gameData.stress < 30) //tweak this
                 gameData.deathCause = "a natural death"
             gameData.deathCause = "heart failure"
         }
@@ -262,7 +259,7 @@ function haveFun() {
     //maybe more damage to intelligence if happiness is capped
     setIntelligence(-1)
 
-    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
+    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress + "/100"
     document.getElementById("happiness").innerHTML = "Happiness: " + gameData.happiness + "/100"
     document.getElementById("intelligence").innerHTML = "Intelligence: " + gameData.intelligence
     
@@ -291,7 +288,7 @@ function relax() {
     var phrases = ["You went on holiday!", "You stayed home with your family!", "You drank a cup of wine at night!", "Your read a fantasy novel!", "You listened to music!"]
     document.getElementById("action").innerHTML = phrases[Math.floor( Math.random()*5 )]
     
-    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
+    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress + "/100"
     document.getElementById("money").innerHTML = "Money: " + gameData.money + " $"
     actionMade = true
 }
@@ -326,7 +323,7 @@ function work() { //work for 6 months
     document.getElementById("action").innerHTML = phrases[Math.floor( Math.random()*1 )]
 
     document.getElementById("experience").innerHTML = "Experience: " + gameData.experience
-    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
+    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress + "/100"
     document.getElementById("money").innerHTML = "Money: " + gameData.money + " $"
     actionMade = true
 }

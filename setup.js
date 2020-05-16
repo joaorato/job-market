@@ -13,7 +13,10 @@ var gameData = {
     start: false
 }
 
+// variables used in scripts
 var lifeStages = ["baby", "child", "teen", "adult", "late adult", "elder"];
+var actionMade = false
+var holdActionText = true
 
 function genderButtonsOn(){
     document.getElementById("femaleButton").innerHTML = '<button onclick="gendering(0)">Female</button>';
@@ -79,7 +82,8 @@ function reset(){
     document.getElementById("age").innerHTML = "Age: " + gameData.ageYears + " years " + gameData.ageMonths + " months"
     document.getElementById("happiness").innerHTML = "Happiness: " + gameData.happiness + "/100"
     document.getElementById("intelligence").innerHTML = "Intelligence: " + gameData.intelligence
-    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress
+    document.getElementById("experience").innerHTML = "Experience: " + gameData.intelligence
+    document.getElementById("stress").innerHTML = "Stress: " + gameData.stress + "/100"
     document.getElementById("money").innerHTML = "Money: " + gameData.money + " $"
     document.getElementById("action").innerHTML = ''
     studyButtonOff()
