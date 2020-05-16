@@ -13,6 +13,11 @@
     . timePassing() alternatives/changes
     . future design
 
+- tweak attributes:
+    . work gives too little money - scale to real values
+    . make study more expensive for adults
+    . tweak relax cost (maybe it's okay after work is fixed)
+
 //FUTURE ENDEAVOURS
 
 introduce subdivisions for the actions: locked if attributes dont match
