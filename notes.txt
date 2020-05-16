@@ -1,5 +1,26 @@
+//IMMEDIATE TODO
+
+- death():
+    . health chance: introduce exponential like in happiness
+    . happiness chance (tweak values)
+
+- introduce some visuals:
+    . drawings for life stages    
+    . work on a prototype design
+
+- rethink the code structure and overall design:
+    . new classes/scripts
+    . timePassing() alternatives/changes
+    . future design
+
+//FUTURE ENDEAVOURS
+
+introduce subdivisions for the actions: locked if attributes dont match
+
 special choices in certain ages
 
-therapists, events that help increase happiness, reduce stress etc.
+random events that help increase happiness, reduce stress etc.
+
+therapy
 
 spend money/experience(?) to gain skills -> skill tree?
