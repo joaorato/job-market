@@ -102,20 +102,24 @@ function deathChance(){
 
     //stress + age contribution
     var stress = gameData.stress
-    if (stress < 70){
-        //from 0% to 15% chance of dying - 
-        chanceHealth = 0.15*(100 - (10/7)*(70-stress)) //change this to non-linear after
-    }
-    if (stress >= 70 && stress < 90){
-        //from 15% to 35% chance of dying - 
-        chanceHealth = 0.35*(100 - 2.857142*(90-stress))
-    }
-    if (stress >= 90 && stress){
-        //from 35% to 60% chance of dying - 
-        chanceHealth = 0.60*(100 - (25/6)*(100-stress))
-    }
-    
-    chanceHealth = gameData.ageYears*chanceHealth/50 //check for balance
+    // if (stress < 70){
+    //     //from 0% to 15% chance of dying - 
+    //     chanceHealth = 0.15*(100 - (10/7)*(70-stress)) //change this to non-linear after
+    // }
+    // if (stress >= 70 && stress < 90){
+    //     //from 15% to 35% chance of dying - 
+    //     chanceHealth = 0.35*(100 - 2.857142*(90-stress))
+    // }
+    // if (stress >= 90 && stress){
+    //     //from 35% to 60% chance of dying - 
+    //     chanceHealth = 0.60*(100 - (25/6)*(100-stress))
+    // }
+    age = gameData.ageYears
+    chanceHealth = 0.1*Math.exp(-0.003*age*(85-stress)) //yearly
+    console.log("Helath Yearly Chance: " + chanceHealth*100 + "%")
+    chanceHealth = (1 - Math.pow(1-chanceHealth, 1/12))*100 //monthly
+
+    //chanceHealth = gameData.ageYears*chanceHealth/50 //check for balance
     //include some natural death where stress is not a factor!
     //gaussian function around 90 yrs?
     if (gameData.ageYears > 65){
