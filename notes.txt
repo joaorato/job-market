@@ -5,6 +5,7 @@
     . happiness chance (tweak values)
 
 - introduce some visuals:
+    . layout of the main page: font, space between buttons/text
     . drawings for life stages    
     . work on a prototype design
 
@@ -23,6 +24,10 @@
 introduce subdivisions for the actions: locked if attributes dont match
 
 special choices in certain ages
+
+introducing health: not just stress
+
+doctor: increases health. spending a lot of time without going there will increase probability of disease
 
 random events that help increase happiness, reduce stress etc.
 

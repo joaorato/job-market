@@ -19,9 +19,9 @@ var actionMade = false
 var holdActionText = true
 
 function genderButtonsOn(){
-    document.getElementById("femaleButton").innerHTML = '<button onclick="gendering(0)">Female</button>';
-    document.getElementById("maleButton").innerHTML = '<button onclick="gendering(1)">Male</button>';
-    document.getElementById("yesButton").innerHTML = '<button onclick="gendering(2)">Yes</button>';
+    document.getElementById("femaleButton").innerHTML = '<button style="margin:15px;" onclick="gendering(0)">Female</button>';
+    document.getElementById("maleButton").innerHTML = '<button style="margin:15px;" onclick="gendering(1)">Male</button>';
+    document.getElementById("yesButton").innerHTML = '<button style="margin:15px;" onclick="gendering(2)">Yes</button>';
 }
 
 function genderButtonsOff(){
@@ -36,18 +36,22 @@ function gendering(gender) {
     switch(gender) {
         case 0:
             gameData.gender = "female";
+            document.getElementById("photo").innerHTML = '<img src="resources/babygirl.png" alt="baby girl" style="width:128px;">'
             break;
         case 1:
             gameData.gender = "male";
+            document.getElementById("photo").innerHTML = '<img src="resources/babyboy.png" alt="baby boy" style="width:128px;">'
             break;
         case 2:
             rand = Math.floor(Math.random()*2)
             switch(rand) {
                 case 0:
                     gameData.gender = "female";
+                    document.getElementById("photo").innerHTML = '<img src="resources/babygirl.png" alt="baby girl" style="width:128px;">'
                     break;
                 case 1:
                     gameData.gender = "male";
+                    document.getElementById("photo").innerHTML = '<img src="resources/babyboy.png" alt="baby boy" style="width:128px;">'
                     break;
             }
     }

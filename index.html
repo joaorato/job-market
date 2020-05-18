@@ -4,32 +4,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Market</title>
 </head>
+<style>
+    .content {
+      max-width: 500px;
+      margin: auto;
+    }
+</style>
 <body>
-    <span id="femaleButton"></span>
-    <span id="maleButton"></span>
-    <span id="yesButton"></span>
-    <p id="nameAndGender"></p>
-    <script src="setup.js" charset="utf-8" type="text/javascript"></script>
-    <p id="age">Age: 0 years 0 months</p>
-    <span id="comingOfAge"></span>
-    <p id="intelligence">Intelligence: 0</p>
-    <p id="experience">Experience: 0</p>
-    <span id="applyForHigherPosition"></span>
-    <p id="stress">Stress: 0/100</p>
-    <span id="stressWarning"></span>
-    <p id="happiness">Happiness: 0/100</p>
-    <span id="happinessWarning"></span>
-    <p id="money">Money: 0 $</p>
-    <span id="studyButtonAppear"></span>
-    <span id="workButtonAppear"></span>
-    <button onclick="relax()" id="relax">Relax</button>
-    <button onclick="haveFun()" id="fun">Have Fun!</button><br>
-    <span id="action"></span><br>
-    <button onclick="timeController(2)" id="slowDown">x0.5</button>
-    <button onclick="timeController(1)" id="normalTime">x1</button>
-    <button onclick="timeController(0.5)" id="speedUp">x2</button>
-    <p id="timeText">Game Speed: x1</p>
-    <button onclick="reset()" id="reset">Reset</button>
-    <script src="main.js" charset="utf-8" type="text/javascript"></script>
+    
+    <div class="content">
+      <!-- Page content -->
+      <span id="femaleButton"></span>
+      <span id="maleButton"></span>
+      <span id="yesButton"></span>
+      <p id="nameAndGender"></p>
+      <span id="photo"></span>
+      <script src="setup.js" charset="utf-8" type="text/javascript"></script>
+      <p id="age">Age: 0 years 0 months</p>
+      <span id="comingOfAge"></span>
+      <p id="intelligence">Intelligence: 0</p>
+      <p id="experience">Experience: 0</p>
+      <span id="applyForHigherPosition"></span>
+      <p id="stress">Stress: 0/100</p>
+      <span id="stressWarning"></span>
+      <p id="happiness">Happiness: 0/100</p>
+      <span id="happinessWarning"></span>
+      <p id="money">Money: 0 $</p>
+      <span id="studyButtonAppear"></span>
+      <span id="workButtonAppear"></span>
+      <button onclick="relax()" id="relax">Relax</button>
+      <button onclick="haveFun()" id="fun">Have Fun!</button><br>
+      <span id="action"></span><br>
+      <button onclick="timeController(2)" id="slowDown">x0.5</button>
+      <button onclick="timeController(1)" id="normalTime">x1</button>
+      <button onclick="timeController(0.5)" id="speedUp">x2</button>
+      <p id="timeText">Game Speed: x1</p>
+      <button onclick="reset()" id="reset">Reset</button>
+      <script src="main.js" charset="utf-8" type="text/javascript"></script>
+    </div>
+    
 </body>
 </html>
