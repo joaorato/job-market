@@ -116,7 +116,7 @@ function deathChance(){
     // }
     age = gameData.ageYears
     chanceHealth = 0.1*Math.exp(-0.003*age*(85-stress)) //yearly
-    console.log("Helath Yearly Chance: " + chanceHealth*100 + "%")
+    console.log("Health Yearly Chance: " + chanceHealth*100 + "%")
     chanceHealth = (1 - Math.pow(1-chanceHealth, 1/12))*100 //monthly
 
     //chanceHealth = gameData.ageYears*chanceHealth/50 //check for balance
